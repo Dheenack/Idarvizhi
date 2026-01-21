@@ -14,6 +14,8 @@ import os
 from disaster_ai import DisasterAI, DisasterContext
 from multilingual import translations as T_dict
 from utils.theme import set_theme
+from utils.gen_pdf import save_pdf
+from utils.risk_simulator import generate_environmental_factors
 # ---------------------------------------------------------
 # LOAD CSV FILES (DO NOT REMOVE)
 # ---------------------------------------------------------
@@ -145,7 +147,7 @@ print("overall_risk:", overall_risk)
 # ---------------------------------------------------------
 # 🚨 REAL-TIME RISK SUMMARY
 # ---------------------------------------------------------
-st.subheader("🚨 Real-Time Risk Summary")
+st.subheader(f"🚨 {T["risk_summary"]}")
 c1, c2, c3 = st.columns(3)
 
 def risk_card(t, v, c):
@@ -154,48 +156,49 @@ def risk_card(t, v, c):
     <h3>{t}</h3><h1>{v}</h1></div>
     """, unsafe_allow_html=True)
 
-with c1: risk_card("Overall Risk", overall_risk, "#e53935")
+with c1: risk_card(T["overall_risk"], overall_risk, "#e53935")
 with c2: risk_card("District", district, "#1e88e5")
 with c3: risk_card("Disaster", disaster, "#6a1b9a")
 
-# ---------------------------------------------------------
-# 🔊 AUTO VOICE ALERT
-# ---------------------------------------------------------
-if st.sidebar.toggle("🔊 Auto Disaster Voice Alert", True):
-    play_voice_alert(
-        generate_voice_message(lang, disaster, district, state, overall_risk),
-        lang
-    )
+
 
 # ---------------------------------------------------------
 # AI REPORT
 # ---------------------------------------------------------
-st.subheader(T["ai_report"])
+import streamlit as st
+import time
+
+st.subheader(f"⚙️ {T["risk_factor_analysis"]}")
+
+placeholder = st.empty()
+
 for i in range(1, 11):
-    st.write(f"{i}. Risk factor analysis generated.")
+    for dots in ["", ".", "..", "..."]:
+        placeholder.text(f"Step {i}/10: Generating{dots}")
+        time.sleep(0.03)
 
-# ---------------------------------------------------------
-# PDF
-# ---------------------------------------------------------
-def save_pdf(points):
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font("Arial", "B", 16)
-    pdf.cell(0, 10, "IDARVIZHI - Disaster Risk Intelligence Report", ln=True)
-    pdf.ln(5)
-    pdf.set_font("Arial", "", 12)
-    for p in points:
-        pdf.multi_cell(0, 8, p)
-    pdf.output("AI_Report.pdf")
-    return "AI_Report.pdf"
+st.success(f"✅ {T["analysis_complete"]}")
 
-if st.button("📄 Download AI Report PDF"):
-    st.download_button("Download PDF", open(save_pdf(["Report - generated"]), "rb"))
+env = generate_environmental_factors(disaster)
+st.subheader(T["ai_report"])
+st.subheader(f"🌍 {T["environment_simulation"]}")
 
+col1, col2, col3 = st.columns(3)
 
-# =========================================================
-# IDARVIZHI - DISASTER INTELLIGENCE SYSTEM (FINAL - ORDERED)
-# =========================================================
+col1.metric(f"🌡️ {T["temperature"]}", env["temperature_c"])
+col1.metric(f"💧 {T["humidity"]}", env["humidity_pct"])
+col1.metric(f"🌧️ {T["rainfall"]}", env["rainfall_mm"])
+
+col2.metric(f"🌬️ {T["wind_speed"]}", env["wind_speed_kmph"])
+col2.metric(f"🔽 {T["pressure"]}", env["pressure_hpa"])
+col2.metric(f"🌊 {T["river_level"]}", env["river_level_m"])
+
+col3.metric(f"🏙️ {T["population_density"]}", env["population_density_sqkm"])
+col3.metric(f"🏥 {T["hospital_access"]}", env["hospital_access_index"])
+col3.metric(f"🚨 {T["evacuation_index"]}", env["evacuation_access_index"])
+
+st.metric(f"📊 {T["severity_index"]}", env["disaster_index"])
+
 # ---------------------------------------------------------
 # VOICE MESSAGE
 # ---------------------------------------------------------
@@ -222,21 +225,56 @@ def play_voice_alert(text, lang):
         tts.save(f.name)
         st.audio(f.name)
 
+# ---------------------------------------------------------
+# 🔊 AUTO VOICE ALERT
+# ---------------------------------------------------------
+if st.sidebar.toggle(f"🔊 {T["voice_alert"]}", True):
+    play_voice_alert(
+        generate_voice_message(lang, disaster, district, state, overall_risk),
+        lang
+    )
+
+# ---------------------------------------------------------
+# PDF
+# ---------------------------------------------------------
+
+ 
+
+    pdf_path = save_pdf(
+        state=state,
+        district=district,
+        year=year,
+        disaster=disaster,
+        overall_risk=overall_risk,
+        env=env
+    )
+
+    with open(pdf_path, "rb") as f:
+        st.download_button(
+            label=f"⬇️ {T["download_pdf"]}",
+            data=f,
+            file_name=pdf_path,
+            mime="application/pdf"
+        )
+
+# =========================================================
+# IDARVIZHI - DISASTER INTELLIGENCE SYSTEM (FINAL - ORDERED)
+# =========================================================
+
+
 
 # ---------------------------------------------------------
 # MAP
 # ---------------------------------------------------------
-
-
-st.subheader("🗺️ Live District Risk Map")
-# --------------------------------------------------------- 
+st.subheader(f"🗺️ {T["district_map"]}")
+# ---------------------------------------------------------
 # MAP STYLE SWITCHER 
 # --------------------------------------------------------- 
 map_styles = [ "basic", "carto-darkmatter", "carto-darkmatter-nolabels", 
 "carto-positron", "carto-positron-nolabels", "carto-voyager", "carto-voyager-nolabels", 
 "dark", "light", "open-street-map", "outdoors", "satellite", "satellite-streets", "streets", "white-bg" ] 
 # User selects map style 
-selected_style = st.selectbox("🗺️ Choose Map Style", map_styles, index=9) # default index=9 → "open-street-map"
+selected_style = st.selectbox(f"🗺️ {T["choose_map_style"]}", map_styles, index=9) # default index=9 → "open-street-map"
 
 # classify risk levels
 def classify_risk(score):
@@ -295,7 +333,7 @@ st.plotly_chart(fig, width="stretch")
 import streamlit as st
 from hf_blend import *
 
-st.subheader("🤖 Disaster Assistant (Hybrid)") 
+st.subheader(f"🤖 {T["chatbot"]} (Hybrid)") 
 if "chat" not in st.session_state: 
     st.session_state.chat = [] 
 
@@ -307,15 +345,15 @@ ctx = DisasterContext(disaster_type=disaster_type, state=state, district=distric
 
 
 
-q = st.text_input("Ask your disaster question")
+q = st.text_input(f"{T["ask_question"]}")
 if q:
     resp = blended_answer_online(q, ctx)
-    st.markdown("### AI Perspective (Online AI: model-mistralai/Mistral-7B-Instruct-v0.2)")
+    st.markdown(f"### {T["ai_perspective"]} (Online AI: model-mistralai/Mistral-7B-Instruct-v0.2)")
     st.write(resp["api_text"])
 
     st.markdown(f"**{resp['title']}**")
     st.write(resp['summary'])
-
+    play_voice_alert(resp['summary'], lang)
     st.markdown("### Structured Guidance")
     for b in resp["kb_bullets"]:
         st.write(b)
