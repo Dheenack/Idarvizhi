@@ -1,0 +1,30 @@
+state,district,year,disaster_type,severity,casualties,affected_population
+Tamil Nadu,Chennai,2020,Flood,High,50,120000
+Tamil Nadu,Coimbatore,2019,Cyclone,Medium,30,80000
+Tamil Nadu,Salem,2021,Drought,Medium,0,50000
+Tamil Nadu,Tirunelveli,2018,Flood,High,20,70000
+Kerala,Alappuzha,2020,Flood,High,25,100000
+Kerala,Ernakulam,2019,Landslide,Medium,10,50000
+Kerala,Kozhikode,2021,Flood,High,15,60000
+Andhra Pradesh,Guntur,2020,Cyclone,High,40,90000
+Andhra Pradesh,Kurnool,2019,Drought,Medium,0,55000
+Maharashtra,Mumbai,2020,Flood,High,60,150000
+Maharashtra,Pune,2019,Heatwave,Medium,10,50000
+Karnataka,Bangalore,2021,Flood,Medium,5,45000
+Karnataka,Mysore,2020,Drought,Low,0,30000
+West Bengal,Kolkata,2021,Cyclone,High,30,80000
+Odisha,Bhubaneswar,2020,Cyclone,High,35,90000
+Gujarat,Ahmedabad,2019,Flood,Medium,15,40000
+Punjab,Amritsar,2021,Flood,Low,2,15000
+Assam,Guwahati,2020,Flood,High,45,110000
+Tamil Nadu,Ariyalur,2022,Flood,Medium,5,25000
+Tamil Nadu,Thoothukudi,2022,Cyclone,High,12,40000
+Kerala,Malappuram,2022,Landslide,Medium,8,20000
+Andhra Pradesh,Visakhapatnam,2021,Cyclone,High,25,70000
+Maharashtra,Nagpur,2021,Heatwave,Medium,10,35000
+Karnataka,Hubli,2021,Drought,Low,0,20000
+West Bengal,Howrah,2020,Flood,High,20,45000
+Odisha,Cuttack,2021,Cyclone,High,30,60000
+Gujarat,Surat,2020,Flood,Medium,12,35000
+Punjab,Ludhiana,2019,Flood,Low,5,12000
+Assam,Dibrugarh,2021,Flood,High,15,30000

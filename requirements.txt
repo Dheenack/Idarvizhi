@@ -1,0 +1,8 @@
+streamlit
+pandas
+plotly
+numpy
+reportlab
+fpdf
+gTTS
+streamlit-lottie

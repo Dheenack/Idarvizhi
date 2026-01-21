@@ -1,0 +1,90 @@
+State,District,Disaster_Type,Risk_Score,Year
+Tamil Nadu,Chennai,Flood,88,2023
+Tamil Nadu,Cuddalore,Cyclone,82,2022
+Tamil Nadu,Kanyakumari,Storm Surge,76,2021
+Tamil Nadu,Coimbatore,Heatwave,69,2020
+Tamil Nadu,Madurai,Drought,64,2019
+
+Kerala,Alappuzha,Flood,90,2018
+Kerala,Ernakulam,Flood,87,2019
+Kerala,Idukki,Landslide,85,2020
+Kerala,Thrissur,Heavy Rain,78,2022
+Kerala,Kozhikode,Flash Flood,80,2023
+
+Karnataka,Bengaluru,Urban Flood,75,2022
+Karnataka,Shivamogga,Landslide,83,2021
+Karnataka,Dharwad,Drought,66,2019
+Karnataka,Udupi,Cyclone,79,2020
+Karnataka,Raichur,Heatwave,71,2023
+
+Andhra Pradesh,Visakhapatnam,Cyclone,89,2020
+Andhra Pradesh,Nellore,Flood,81,2021
+Andhra Pradesh,Kurnool,Drought,68,2019
+Andhra Pradesh,Krishna,Storm Surge,77,2022
+Andhra Pradesh,Anantapur,Heatwave,73,2023
+
+Telangana,Hyderabad,Urban Flood,78,2022
+Telangana,Khammam,Flood,80,2021
+Telangana,Warangal,Heatwave,70,2023
+Telangana,Nizamabad,Drought,65,2019
+Telangana,Adilabad,Heavy Rain,72,2020
+
+Maharashtra,Mumbai,Flood,92,2023
+Maharashtra,Pune,Urban Flood,85,2022
+Maharashtra,Nagpur,Heatwave,74,2020
+Maharashtra,Kolhapur,Flood,88,2019
+Maharashtra,Solapur,Drought,69,2021
+
+Gujarat,Ahmedabad,Heatwave,84,2022
+Gujarat,Surat,Flood,81,2020
+Gujarat,Kutch,Drought,72,2019
+Gujarat,Bhavnagar,Cyclone,79,2021
+Gujarat,Rajkot,Heatwave,76,2023
+
+Rajasthan,Jaipur,Heatwave,86,2022
+Rajasthan,Jaisalmer,Drought,82,2021
+Rajasthan,Udaipur,Heavy Rain,70,2020
+Rajasthan,Kota,Heatwave,78,2023
+Rajasthan,Bikaner,Drought,75,2019
+
+Uttar Pradesh,Lucknow,Flood,79,2021
+Uttar Pradesh,Gorakhpur,Flood,83,2020
+Uttar Pradesh,Agra,Heatwave,74,2022
+Uttar Pradesh,Varanasi,Flood,81,2023
+Uttar Pradesh,Kanpur,Urban Flood,77,2019
+
+Bihar,Patna,Flood,88,2023
+Bihar,Bhagalpur,Flood,84,2021
+Bihar,Muzaffarpur,Heatwave,72,2022
+Bihar,Gaya,Drought,67,2019
+Bihar,Araria,Flood,80,2020
+
+West Bengal,Kolkata,Cyclone,90,2020
+West Bengal,North 24 Parganas,Cyclone,88,2021
+West Bengal,Howrah,Flood,82,2022
+West Bengal,Jalpaiguri,Landslide,79,2023
+West Bengal,Medinipur,Storm Surge,85,2019
+
+Odisha,Puri,Cyclone,92,2019
+Odisha,Kendrapara,Storm Surge,88,2020
+Odisha,Cuttack,Flood,83,2021
+Odisha,Balangir,Drought,70,2022
+Odisha,Ganjam,Cyclone,90,2023
+
+Assam,Guwahati,Flood,87,2022
+Assam,Dhemaji,Flood,89,2020
+Assam,Cachar,Landslide,78,2021
+Assam,Barpeta,Flood,85,2023
+Assam,Tezpur,Heavy Rain,74,2019
+
+Jharkhand,Ranchi,Heatwave,73,2022
+Jharkhand,Dhanbad,Heatwave,75,2023
+Jharkhand,Palamu,Drought,70,2021
+Jharkhand,Giridih,Flood,68,2020
+Jharkhand,Hazaribagh,Heavy Rain,72,2019
+
+Madhya Pradesh,Bhopal,Urban Flood,76,2022
+Madhya Pradesh,Indore,Heatwave,79,2023
+Madhya Pradesh,Rewa,Flood,81,2021
+Madhya Pradesh,Chhindwara,Drought,69,2019
+Madhya Pradesh,Gwalior,Heatwave,77,2020
