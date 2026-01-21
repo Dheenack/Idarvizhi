@@ -8,7 +8,7 @@ client = InferenceClient(
     api_key=""
 )
 
-def ask_hf( question: str,model: str = "mistralai/Mistral-7B-Instruct-v0.2"):
+def ask_hf( question: str,model: str = "mistralai/Mistral-7B-Instruct-v0.2:featherless-ai"):
     response = client.chat.completions.create(
         model=model,
         messages=[
