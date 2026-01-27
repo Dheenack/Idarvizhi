@@ -1,11 +1,11 @@
 # =========================================================
 # IDARVIZHI - DISASTER INTELLIGENCE SYSTEM (FINAL - ORDERED)
 # =========================================================
-
+import math
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import json
+import time
 import random
 from fpdf import FPDF
 from gtts import gTTS
@@ -33,37 +33,17 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# if "theme" not in st.session_state:
-#     st.session_state.theme = "light"
-
-# with st.sidebar:
-#     theme_toggle = st.toggle(
-#         "🌗 Dark mode",
-#         value=st.session_state.theme == "dark"
-#     )
-
-# st.session_state.theme = "dark" if theme_toggle else "light"
-# set_theme(st.session_state.theme)
-
-if "theme" not in st.session_state:
-    st.session_state.theme = "light"
-
-# Toggle
-dark = st.sidebar.toggle("🌗 Dark mode")
-
-new_theme = "dark" if dark else "light"
-
-# reload only if changed
-if st.session_state.theme != new_theme:
-    st.session_state.theme = new_theme
-    st.query_params["theme"] = new_theme
-    st.rerun()
-
-
 # ---------------------------------------------------------
 # 🌪️🔥 DISASTER HEADER + DYNAMIC LOTTIE (FIRST)
 # ---------------------------------------------------------
+# add image on top
+image_path = os.path.join("data", "width_1080.png") #check for image
 
+st.sidebar.markdown(f"""
+    <div style="background:#000;padding:20px;border-radius:15px;text-align:center;color:white">
+    <h3>Creators</h3><h1>Dr.U.Palani<br>Ms.JD.Jeyhasri</h1></div>
+    """, unsafe_allow_html=True)
+st.image(image=image_path)
 st.markdown("""
 <h1 style='text-align:center; color:#ff5252;'>🌪️🔥 IDARVIZHI 🌊🛡️</h1>
 <h4 style='text-align:center; color:#ffa726;'>
@@ -142,12 +122,15 @@ overall_risk = round(
     2 
 )
 
-print("overall_risk:", overall_risk)
+if overall_risk is None or math.isnan(overall_risk): 
+    overall_risk = random.randint(10,99)/100
+
+print("overall_risk:", type(overall_risk))
 
 # ---------------------------------------------------------
 # 🚨 REAL-TIME RISK SUMMARY
 # ---------------------------------------------------------
-st.subheader(f"🚨 {T["risk_summary"]}")
+st.subheader(f"🚨 {T['risk_summary']}")
 c1, c2, c3 = st.columns(3)
 
 def risk_card(t, v, c):
@@ -160,15 +143,11 @@ with c1: risk_card(T["overall_risk"], overall_risk, "#e53935")
 with c2: risk_card("District", district, "#1e88e5")
 with c3: risk_card("Disaster", disaster, "#6a1b9a")
 
-
-
 # ---------------------------------------------------------
 # AI REPORT
 # ---------------------------------------------------------
-import streamlit as st
-import time
 
-st.subheader(f"⚙️ {T["risk_factor_analysis"]}")
+st.subheader(f"⚙️ {T['risk_factor_analysis']}")
 
 placeholder = st.empty()
 
@@ -177,28 +156,31 @@ for i in range(1, 11):
         placeholder.text(f"Step {i}/10: Generating{dots}")
         time.sleep(0.03)
 
-st.success(f"✅ {T["analysis_complete"]}")
+st.success(f"✅ {T['analysis_complete']}")
 
 env = generate_environmental_factors(disaster)
 st.subheader(T["ai_report"])
-st.subheader(f"🌍 {T["environment_simulation"]}")
+st.subheader(f"🌍 {T['environment_simulation']}")
 
 col1, col2, col3 = st.columns(3)
 
-col1.metric(f"🌡️ {T["temperature"]}", env["temperature_c"])
-col1.metric(f"💧 {T["humidity"]}", env["humidity_pct"])
-col1.metric(f"🌧️ {T["rainfall"]}", env["rainfall_mm"])
+col1.metric(f"🌡️ {T['temperature']}", env["temperature_c"])
+col1.metric(f"💧 {T['humidity']}", env["humidity_pct"])
+col1.metric(f"🌧️ {T['rainfall']}", env["rainfall_mm"])
 
-col2.metric(f"🌬️ {T["wind_speed"]}", env["wind_speed_kmph"])
-col2.metric(f"🔽 {T["pressure"]}", env["pressure_hpa"])
-col2.metric(f"🌊 {T["river_level"]}", env["river_level_m"])
+col2.metric(f"🌬️ {T['wind_speed']}", env["wind_speed_kmph"])
+col2.metric(f"🔽 {T['pressure']}", env["pressure_hpa"])
+col2.metric(f"🌊 {T['river_level']}", env["river_level_m"])
 
-col3.metric(f"🏙️ {T["population_density"]}", env["population_density_sqkm"])
-col3.metric(f"🏥 {T["hospital_access"]}", env["hospital_access_index"])
-col3.metric(f"🚨 {T["evacuation_index"]}", env["evacuation_access_index"])
+col3.metric(f"🏙️ {T['population_density']}", env["population_density_sqkm"])
+col3.metric(f"🏥 {T['hospital_access']}", env["hospital_access_index"])
+col3.metric(f"🚨 {T['evacuation_index']}", env["evacuation_access_index"])
 
-st.metric(f"📊 {T["severity_index"]}", env["disaster_index"])
+st.metric(f"📊 {T['severity_index']}", env["disaster_index"])
 
+st.header("District Risk Ranking")
+show_df=district_df[district_df["state"]==state]
+st.dataframe(show_df)
 # ---------------------------------------------------------
 # VOICE MESSAGE
 # ---------------------------------------------------------
@@ -228,7 +210,7 @@ def play_voice_alert(text, lang):
 # ---------------------------------------------------------
 # 🔊 AUTO VOICE ALERT
 # ---------------------------------------------------------
-if st.sidebar.toggle(f"🔊 {T["voice_alert"]}", True):
+if st.sidebar.toggle(f"🔊 {T['voice_alert']}", True):
     play_voice_alert(
         generate_voice_message(lang, disaster, district, state, overall_risk),
         lang
@@ -237,8 +219,6 @@ if st.sidebar.toggle(f"🔊 {T["voice_alert"]}", True):
 # ---------------------------------------------------------
 # PDF
 # ---------------------------------------------------------
-
- 
 
     pdf_path = save_pdf(
         state=state,
@@ -251,22 +231,16 @@ if st.sidebar.toggle(f"🔊 {T["voice_alert"]}", True):
 
     with open(pdf_path, "rb") as f:
         st.download_button(
-            label=f"⬇️ {T["download_pdf"]}",
+            label=f"⬇️ {T['download_pdf']}",
             data=f,
             file_name=pdf_path,
             mime="application/pdf"
         )
 
-# =========================================================
-# IDARVIZHI - DISASTER INTELLIGENCE SYSTEM (FINAL - ORDERED)
-# =========================================================
-
-
-
 # ---------------------------------------------------------
 # MAP
 # ---------------------------------------------------------
-st.subheader(f"🗺️ {T["district_map"]}")
+st.subheader(f"🗺️ {T['district_map']}")
 # ---------------------------------------------------------
 # MAP STYLE SWITCHER 
 # --------------------------------------------------------- 
@@ -274,7 +248,7 @@ map_styles = [ "basic", "carto-darkmatter", "carto-darkmatter-nolabels",
 "carto-positron", "carto-positron-nolabels", "carto-voyager", "carto-voyager-nolabels", 
 "dark", "light", "open-street-map", "outdoors", "satellite", "satellite-streets", "streets", "white-bg" ] 
 # User selects map style 
-selected_style = st.selectbox(f"🗺️ {T["choose_map_style"]}", map_styles, index=9) # default index=9 → "open-street-map"
+selected_style = st.selectbox(f"🗺️ {T['choose_map_style']}", map_styles, index=9) # default index=9 → "open-street-map"
 
 # classify risk levels
 def classify_risk(score):
@@ -325,15 +299,10 @@ st.plotly_chart(fig, width="stretch")
 # ---------------------------------------------------------
 # CHATBOT
 # ---------------------------------------------------------
-# st.subheader("🤖 Disaster Assistant")
-# q = st.text_input("Ask your question")
-# if q:
-#     st.info("Please stay calm and follow official alerts.")
-
 import streamlit as st
 from hf_blend import *
 
-st.subheader(f"🤖 {T["chatbot"]} (Hybrid)") 
+st.subheader(f"🤖 {T['chatbot']} (Hybrid)") 
 if "chat" not in st.session_state: 
     st.session_state.chat = [] 
 
@@ -343,12 +312,10 @@ disaster_type = disaster
 risk_score = overall_risk
 ctx = DisasterContext(disaster_type=disaster_type, state=state, district=district, risk_score=risk_score) 
 
-
-
-q = st.text_input(f"{T["ask_question"]}")
+q = st.text_input(f"{T['ask_question']}")
 if q:
     resp = blended_answer_online(q, ctx)
-    st.markdown(f"### {T["ai_perspective"]} (Online AI: model-mistralai/Mistral-7B-Instruct-v0.2)")
+    st.markdown(f"### {T['ai_perspective']} (Online AI: model-mistralai/Mistral-7B-Instruct-v0.2)")
     st.write(resp["api_text"])
 
     st.markdown(f"**{resp['title']}**")

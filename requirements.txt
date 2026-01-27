@@ -6,3 +6,5 @@ reportlab
 fpdf
 gTTS
 streamlit-lottie
+huggingface_hub
+multilingual

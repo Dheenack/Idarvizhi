@@ -67,20 +67,20 @@ West Bengal,Medinipur,Storm Surge,85,2019
 
 Odisha,Puri,Cyclone,92,2019
 Odisha,Kendrapara,Storm Surge,88,2020
-Odisha,Cuttack,Flood,83,2021
+Odisha,Cuttack,Flood,65,2021
 Odisha,Balangir,Drought,70,2022
 Odisha,Ganjam,Cyclone,90,2023
 
 Assam,Guwahati,Flood,87,2022
-Assam,Dhemaji,Flood,89,2020
+Assam,Dhemaji,Flood,99,2020
 Assam,Cachar,Landslide,78,2021
 Assam,Barpeta,Flood,85,2023
 Assam,Tezpur,Heavy Rain,74,2019
 
-Jharkhand,Ranchi,Heatwave,73,2022
-Jharkhand,Dhanbad,Heatwave,75,2023
+Jharkhand,Ranchi,Heatwave,87,2022
+Jharkhand,Dhanbad,Heatwave,88,2023
 Jharkhand,Palamu,Drought,70,2021
-Jharkhand,Giridih,Flood,68,2020
+Jharkhand,Giridih,Flood,77,2020
 Jharkhand,Hazaribagh,Heavy Rain,72,2019
 
 Madhya Pradesh,Bhopal,Urban Flood,76,2022
@@ -89,7 +89,7 @@ Madhya Pradesh,Rewa,Flood,81,2021
 Madhya Pradesh,Chhindwara,Drought,69,2019
 Madhya Pradesh,Gwalior,Heatwave,77,2020
 
-State,District,Disaster_Type,Risk_Score,Year
+
 Tamil Nadu,Chennai,Flood,89,2024
 Tamil Nadu,Cuddalore,Cyclone,84,2025
 Tamil Nadu,Kanyakumari,Storm Surge,77,2024
