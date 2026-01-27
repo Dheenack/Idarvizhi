@@ -9,6 +9,7 @@ import time
 import random
 from fpdf import FPDF
 from gtts import gTTS
+from PIL import Image
 import tempfile
 import os
 from disaster_ai import DisasterAI, DisasterContext
@@ -43,9 +44,11 @@ st.sidebar.markdown(f"""
     <div style="background:#000;padding:20px;border-radius:15px;text-align:center;color:white">
     <h3>Creators</h3><h1>Dr.U.Palani<br>Ms.JD.Jeyhasri</h1></div>
     """, unsafe_allow_html=True)
-st.image(image=image_path)
+img = Image.open(image_path) 
+img_resized = img.resize((1200, 200))
+st.image(image=img_resized)
 st.markdown("""
-<h1 style='text-align:center; color:#ff5252;'>🌪️🔥 IDARVIZHI 🌊🛡️</h1>
+<h1 style='text-align:center; font-size:6em;color:#ff5252;'>🌪️🔥 IDARVIZHI 🌊🛡️</h1>
 <h4 style='text-align:center; color:#ffa726;'>
 Disaster Intelligence • Risk Prediction • Life Saving Dashboard
 </h4>
